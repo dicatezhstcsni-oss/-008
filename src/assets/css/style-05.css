@@ -1,0 +1,47 @@
+#shandongPreGuide{
+  position:fixed;
+  inset:0;
+  z-index:1000005;
+  display:none;
+  background:linear-gradient(135deg,#fff7f8 0%,#f4fbff 100%);
+  overflow:hidden;
+  font-family:'PingFang SC',-apple-system,BlinkMacSystemFont,sans-serif;
+}
+#shandongPreGuide.active{display:flex;}
+.sd-pre-page{width:100%;height:100%;display:flex;flex-direction:column;}
+.sd-pre-header{
+  height:72px;flex-shrink:0;background:rgba(255,255,255,.94);backdrop-filter:blur(18px);
+  box-shadow:0 6px 24px rgba(0,0,0,.08);display:flex;align-items:center;justify-content:space-between;padding:12px 18px;
+}
+.sd-pre-title{font-size:21px;font-weight:900;color:#2f2f2f;}
+.sd-pre-sub{font-size:12px;color:#888;margin-top:2px;}
+.sd-pre-close{
+  border:none;border-radius:999px;padding:10px 16px;color:#fff;font-weight:800;
+  background:linear-gradient(135deg,#ff8e9d,#ffb4bc);box-shadow:0 8px 20px rgba(255,142,157,.28);cursor:pointer;
+}
+.sd-pre-body{flex:1;overflow:auto;padding:18px;-webkit-overflow-scrolling:touch;}
+.sd-pre-map{position:relative;width:1280px;min-width:1280px;margin:0 auto;}
+.sd-pre-map img{
+  display:block;width:1280px;max-width:none;height:auto;border-radius:34px;border:8px solid rgba(255,255,255,.88);
+  box-shadow:0 18px 55px rgba(38,68,88,.18);
+}
+.sd-pre-tip{
+  position:absolute;left:350px;top:265px;width:305px;background:rgba(255,255,255,.94);border-radius:22px;
+  padding:14px 16px;box-shadow:0 12px 32px rgba(255,142,157,.2);color:#555;font-size:13px;line-height:1.65;
+}
+.sd-city-btn{position:absolute;border:none;border-radius:999px;padding:12px 20px;font-size:16px;font-weight:900;white-space:nowrap;}
+.sd-city-btn.jinan{
+  left:455px;top:365px;cursor:pointer;color:white;background:linear-gradient(135deg,#ff7f91,#ffb45f);
+  box-shadow:0 10px 24px rgba(255,126,145,.38),0 0 0 8px rgba(255,255,255,.55);animation:sdJinanPulse 1.8s infinite;
+}
+.sd-city-btn.locked{color:#777;background:rgba(255,255,255,.92);box-shadow:0 8px 20px rgba(0,0,0,.12);pointer-events:none;}
+@keyframes sdJinanPulse{
+  0%,100%{box-shadow:0 10px 24px rgba(255,126,145,.38),0 0 0 7px rgba(255,255,255,.55);}
+  50%{box-shadow:0 12px 30px rgba(255,126,145,.5),0 0 0 13px rgba(255,255,255,.35);}
+}
+@media(max-width:700px){
+  .sd-pre-map{width:1100px;min-width:1100px;}
+  .sd-pre-map img{width:1100px;}
+  .sd-city-btn.jinan{left:390px;top:315px;}
+  .sd-pre-tip{left:300px;top:225px;}
+}

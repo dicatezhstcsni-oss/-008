@@ -1,0 +1,184 @@
+/* 彻底隐藏此前页面中的数字人、口播框和旧视频层，保留VR全景本体 */
+  #qyNarrator,
+  .qy-narrator,
+  .qy-narrator-character,
+  .qy-guofeng-video-character,
+  .qy-narrator-card,
+  .qy-narrator-panel,
+  .qy-walk-avatar,
+  .qy-avatar-video-panel {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  .qc-avatar-launcher {
+    position: fixed;
+    left: max(18px, env(safe-area-inset-left));
+    bottom: max(18px, env(safe-area-inset-bottom));
+    width: clamp(76px, 12vw, 118px);
+    height: clamp(76px, 12vw, 118px);
+    z-index: 999999;
+    border: 0;
+    padding: 0;
+    border-radius: 999px;
+    cursor: pointer;
+    background: radial-gradient(circle at 35% 28%, rgba(255,255,255,.96), rgba(204,255,246,.72) 48%, rgba(0,145,130,.78));
+    box-shadow: 0 10px 30px rgba(0,0,0,.35), 0 0 0 3px rgba(255,255,255,.78), 0 0 0 8px rgba(15,185,160,.20);
+    overflow: visible;
+    animation: qcAvatarPulse 2.8s ease-in-out infinite;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .qc-avatar-launcher::after {
+    content: '点击讲解';
+    position: absolute;
+    left: calc(100% - 8px);
+    top: 50%;
+    transform: translateY(-50%);
+    white-space: nowrap;
+    padding: 8px 12px;
+    border-radius: 999px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 900;
+    background: rgba(0, 70, 68, .72);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 8px 20px rgba(0,0,0,.22);
+  }
+
+  .qc-avatar-launcher img {
+    width: 132%;
+    height: 132%;
+    object-fit: contain;
+    position: absolute;
+    left: 50%;
+    bottom: -9%;
+    transform: translateX(-50%);
+    filter: drop-shadow(0 8px 14px rgba(0,0,0,.25));
+    pointer-events: none;
+  }
+
+  @keyframes qcAvatarPulse {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-5px) scale(1.035); }
+  }
+
+  .qc-video-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 22px;
+    background: rgba(0,0,0,.52);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .qc-video-overlay.active { display: flex; }
+
+  .qc-video-window {
+    position: relative;
+    width: min(92vw, 960px);
+    aspect-ratio: 16 / 9;
+    border-radius: 26px;
+    overflow: hidden;
+    background: #000;
+    box-shadow: 0 24px 80px rgba(0,0,0,.48), 0 0 0 1px rgba(255,255,255,.22);
+    animation: qcVideoIn .28s ease-out both;
+  }
+
+  @keyframes qcVideoIn {
+    from { opacity: 0; transform: translateY(16px) scale(.96); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .qc-video-window video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    background: #000;
+  }
+
+  .qc-video-tip {
+    position: absolute;
+    right: 14px;
+    top: 14px;
+    z-index: 2;
+    padding: 7px 12px;
+    border-radius: 999px;
+    color: rgba(255,255,255,.92);
+    font-size: 13px;
+    font-weight: 800;
+    background: rgba(0,0,0,.42);
+    backdrop-filter: blur(8px);
+    pointer-events: none;
+  }
+
+  @media (max-width: 680px) {
+    .qc-avatar-launcher {
+      width: 74px;
+      height: 74px;
+      left: 12px;
+      bottom: 14px;
+    }
+    .qc-avatar-launcher::after {
+      font-size: 12px;
+      padding: 6px 9px;
+    }
+    .qc-video-overlay { padding: 10px; }
+    .qc-video-window { width: 96vw; border-radius: 18px; }
+    .qc-video-tip { font-size: 12px; top: 10px; right: 10px; }
+  }
+
+
+  /* === 本版修正：头像只在“泉城广场VR”内显示，缩小避免遮挡文字 === */
+  #qyNarrator,
+  .qy-narrator,
+  .qy-narrator-character,
+  .qy-guofeng-video-character,
+  .qy-narrator-card,
+  .qy-narrator-panel,
+  .qy-walk-avatar,
+  .qy-avatar-video-panel {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  .qc-avatar-launcher {
+    display: none !important;
+    width: clamp(52px, 7vw, 68px) !important;
+    height: clamp(52px, 7vw, 68px) !important;
+    left: max(12px, env(safe-area-inset-left)) !important;
+    bottom: max(12px, env(safe-area-inset-bottom)) !important;
+    z-index: 1000001 !important;
+  }
+
+  body.qc-quancheng-vr .qc-avatar-launcher {
+    display: block !important;
+  }
+
+  .qc-avatar-launcher::after {
+    content: '' !important;
+    display: none !important;
+  }
+
+  .qc-avatar-launcher img {
+    width: 128% !important;
+    height: 128% !important;
+    bottom: -8% !important;
+  }
+
+  @media (max-width: 680px) {
+    .qc-avatar-launcher {
+      width: 48px !important;
+      height: 48px !important;
+      left: 8px !important;
+      bottom: 8px !important;
+    }
+  }

@@ -1,0 +1,6 @@
+/* 强制停用旧版“能不能吃”模块，使用 Food V2 */
+#foodPage,
+#foodDetailOverlay,
+#foodDetailSheet {
+    display: none !important;
+}

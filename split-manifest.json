@@ -1,0 +1,6 @@
+{
+  "source": "aceb105f-799c-4bda-9c44-3c6212c79d1d.html",
+  "styles": 12,
+  "scripts": 15,
+  "strategy": "Vue3 Vite safe migration with legacy shell to preserve UI and interactions"
+}

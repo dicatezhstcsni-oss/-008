@@ -1,0 +1,80 @@
+.food-v2-page {
+  position: fixed; inset: 0; left: 50%; transform: translateX(-50%) translateX(100%);
+  width: 100%; max-width: 430px; height: 100vh; background: var(--background, #FFF8F9);
+  z-index: 3000; transition: transform .28s ease; overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.food-v2-page.active { transform: translateX(-50%) translateX(0); }
+.food-v2-header {
+  position: sticky; top: 0; z-index: 2; display: flex; gap: 10px; align-items: center;
+  padding: 14px 16px; background: rgba(255,255,255,.95); backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,142,157,.12);
+}
+.food-v2-back {
+  width: 38px; height: 38px; border: 0; border-radius: 50%; background: #FFF0F2;
+  font-size: 20px; color: #333;
+}
+.food-v2-search {
+  flex: 1; display: flex; align-items: center; gap: 8px; background: #FFF8F9;
+  border: 1px solid rgba(255,142,157,.18); border-radius: 22px; padding: 10px 14px;
+}
+.food-v2-search input { flex: 1; border: 0; outline: none; background: transparent; font-size: 14px; }
+.food-v2-tabs {
+  display: flex; gap: 8px; padding: 14px 16px 8px; overflow-x: auto; scrollbar-width: none;
+}
+.food-v2-tabs::-webkit-scrollbar { display: none; }
+.food-v2-tab {
+  border: 0; flex-shrink: 0; padding: 9px 12px; border-radius: 18px; background: #fff;
+  color: #666; font-size: 13px; box-shadow: 0 2px 8px rgba(255,142,157,.12);
+}
+.food-v2-tab.active {
+  color: white; background: linear-gradient(135deg, var(--primary, #FF8E9D), var(--primary-light, #FFB4BC));
+  font-weight: 700;
+}
+.food-v2-tip {
+  margin: 8px 16px 10px; padding: 12px; border-radius: 14px; background: #fffdf0;
+  color: #666; font-size: 12px; line-height: 1.6; border: 1px solid rgba(255,179,71,.22);
+}
+.food-v2-count { padding: 0 16px 8px; font-size: 13px; color: #999; }
+.food-v2-list { padding: 0 16px 28px; display: flex; flex-direction: column; gap: 10px; }
+.food-v2-item {
+  background: #fff; border-radius: 16px; padding: 14px; box-shadow: 0 2px 8px rgba(255,142,157,.13);
+  display: flex; align-items: center; gap: 12px;
+}
+.food-v2-icon {
+  width: 46px; height: 46px; border-radius: 14px; display: flex; align-items: center; justify-content: center;
+  background: #FFF0F2; font-size: 24px; flex-shrink: 0;
+}
+.food-v2-main { flex: 1; min-width: 0; }
+.food-v2-name { font-size: 15px; color: #333; font-weight: 700; margin-bottom: 3px; }
+.food-v2-cat { font-size: 12px; color: #999; }
+.food-v2-status {
+  flex-shrink: 0; border-radius: 13px; padding: 5px 9px; font-size: 11px; font-weight: 700;
+}
+.food-v2-status.ok { background: #E8F8F0; color: #2E8B57; }
+.food-v2-status.little { background: #F3E8FF; color: #8B5CF6; }
+.food-v2-status.caution { background: #FFF8E8; color: #D4A017; }
+.food-v2-status.no { background: #FFE8E8; color: #DC3545; }
+.food-v2-empty { text-align: center; color: #999; padding: 42px 20px; background: #fff; border-radius: 18px; }
+.food-v2-mask {
+  position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 3100; opacity: 0; visibility: hidden;
+  transition: .25s ease;
+}
+.food-v2-mask.active { opacity: 1; visibility: visible; }
+.food-v2-sheet {
+  position: fixed; bottom: 0; left: 50%; transform: translateX(-50%) translateY(100%);
+  width: 100%; max-width: 430px; background: white; border-radius: 22px 22px 0 0; z-index: 3101;
+  padding: 12px 18px 22px; transition: .28s ease; box-shadow: 0 -10px 28px rgba(0,0,0,.12);
+}
+.food-v2-sheet.active { transform: translateX(-50%) translateY(0); }
+.food-v2-handle { width: 38px; height: 4px; border-radius: 2px; background: #ddd; margin: 0 auto 16px; }
+.food-v2-detail-head { display: flex; gap: 14px; align-items: center; margin-bottom: 14px; }
+.food-v2-detail-icon { width: 58px; height: 58px; border-radius: 16px; background: #FFF0F2; display:flex; align-items:center; justify-content:center; font-size:30px; }
+.food-v2-detail-title { font-size: 20px; font-weight: 800; color: #333; }
+.food-v2-detail-cat { font-size: 13px; color: #999; }
+.food-v2-reason { background: #FFF8F9; border-radius: 16px; padding: 14px; font-size: 14px; color:#666; line-height: 1.75; }
+.food-v2-advice { margin-top: 12px; background: #F8FFF9; border-radius: 16px; padding: 14px; font-size: 13px; color:#666; line-height: 1.7; }
+.food-v2-close {
+  width: 100%; margin-top: 16px; border: 0; border-radius: 16px; padding: 13px; color: #fff; font-weight: 700;
+  background: linear-gradient(135deg, var(--primary, #FF8E9D), var(--primary-light, #FFB4BC));
+}

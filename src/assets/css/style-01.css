@@ -1,0 +1,35 @@
+/* ==================== 终极修复：消灭侧滑透明断层 ==================== */
+    .checkup-page, 
+    .food-page, 
+    .bag-page, 
+    .diet-page, 
+    .checkup-reminder-page, 
+    .preg-calendar-page, 
+    .food-v2-page, 
+    .wt-history-page {
+        /* 1. 改变定位方式，不使用-50%平移，彻底断绝苹果系统侧滑时的计算错位 */
+        left: 0 !important;
+        right: 0 !important;
+        margin: 0 auto !important;
+        
+        /* 2. 默认藏在右侧，并强制开启 3D 硬件加速，锁死背景色 */
+        transform: translateX(100%) translateZ(0) !important; 
+        background-color: #FFF8F9 !important; 
+        
+        /* 3. 告诉手机显卡：这是一个硬质图层，侧滑时不要偷懒把它变透明 */
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        will-change: transform;
+        overscroll-behavior-x: none !important;
+    }
+
+    /* 4. 当页面被激活打开时，直截了当地归位，不带任何复杂的百分比计算 */
+    .checkup-page.active, 
+    .food-page.active, 
+    .bag-page.active, 
+    .diet-page.active, 
+    .checkup-reminder-page.active, 
+    .preg-calendar-page.active, 
+    .food-v2-page.active {
+        transform: translateX(0) translateZ(0) !important;
+    }

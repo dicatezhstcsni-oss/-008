@@ -1,0 +1,34 @@
+.ai-svg-icon {
+    width: 32px;   /* 👈 在这里改宽度，32px 刚好能完美装进你 56px 的粉色圆形按钮里 */
+    height: 32px;  /* 👈 在这里改高度，保持和宽度一致 */
+    display: block;
+}
+.nav-item.ai-center {
+    position: relative;
+}
+
+.ai-btn {
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    color: white;
+    box-shadow: 0 4px 20px rgba(255, 142, 157, 0.5);
+    position: relative;
+    top: 0px;
+    animation: pulse 2s ease-in-out infinite;
+    cursor: pointer; /* 加上鼠标手型，提示可点击 */
+}
+
+@keyframes pulse {
+    0%, 100% { box-shadow: 0 4px 20px rgba(255, 142, 157, 0.5); }
+    50% { box-shadow: 0 4px 30px rgba(255, 142, 157, 0.8), 0 0 40px rgba(255, 142, 157, 0.4); }
+}
+
+.ai-center .nav-label {
+    margin-top: -12px;
+}

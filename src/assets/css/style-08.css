@@ -1,0 +1,619 @@
+:root {
+    --qy-green: #0f6b55;
+    --qy-green-deep: #084b3e;
+    --qy-gold: #f6c35b;
+    --qy-glass: rgba(255,255,255,.82);
+  }
+
+  #qyTourMapPage, #qyVRPage {
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    display: none;
+    background: #eaf7ee;
+    font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+  }
+
+  #qyTourMapPage.qy-active, #qyVRPage.qy-active {
+    display: block;
+  }
+
+  .qy-map-shell {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 20% 12%, rgba(255,255,255,.85), transparent 30%),
+      linear-gradient(180deg, #dff6ff 0%, #effff3 100%);
+  }
+
+  .qy-map-scroll {
+    position: absolute;
+    inset: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    cursor: grab;
+    scrollbar-width: none;
+  }
+  .qy-map-scroll::-webkit-scrollbar { display: none; }
+  .qy-map-scroll:active { cursor: grabbing; }
+
+  /* 核心修复：stage 与图片保持完全相同 2:1 比例，按钮始终按图片坐标定位 */
+  .qy-map-stage {
+    position: relative;
+    height: 100%;
+    width: calc(100vh * 2.0);
+    min-width: 100vw;
+    margin: 0 auto;
+  }
+
+  .qy-map-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    user-select: none;
+    -webkit-user-drag: none;
+    pointer-events: none;
+  }
+
+  .qy-map-stage::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.08), transparent 26%, rgba(0,0,0,.08)),
+      radial-gradient(circle at 50% 45%, transparent 58%, rgba(9,65,49,.08));
+  }
+
+  .qy-map-topbar {
+    position: fixed;
+    left: max(16px, env(safe-area-inset-left));
+    top: max(14px, env(safe-area-inset-top));
+    right: max(16px, env(safe-area-inset-right));
+    z-index: 7;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    pointer-events: none;
+    gap: 12px;
+  }
+
+  .qy-btn, .qy-title {
+    pointer-events: auto;
+    border: 1px solid rgba(255,255,255,.75);
+    border-radius: 999px;
+    background: rgba(255,255,255,.82);
+    color: var(--qy-green-deep);
+    box-shadow: 0 10px 30px rgba(19,91,68,.18);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  .qy-btn {
+    padding: 10px 16px;
+    font-size: 15px;
+    font-weight: 900;
+    cursor: pointer;
+  }
+
+  .qy-title {
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: 1000;
+    letter-spacing: .04em;
+    text-align: center;
+  }
+
+  .qy-hotspot {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    transform: translate(-50%, -50%);
+    z-index: 6;
+    border: 2px solid rgba(255,255,255,.95);
+    border-radius: 999px;
+    padding: 5px 10px 5px 7px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(180deg, #fff8dc, #f2c55f 52%, #c97b25);
+    color: #064b3d;
+    font-size: clamp(10px, 1vw, 15px);
+    font-weight: 1000;
+    white-space: nowrap;
+    cursor: pointer;
+    box-shadow:
+      0 9px 18px rgba(50,42,16,.22),
+      inset 0 1px 0 rgba(255,255,255,.8);
+    transition: transform .18s ease, filter .18s ease, box-shadow .18s ease;
+    touch-action: manipulation;
+  }
+
+  .qy-hotspot .qy-pin {
+    width: .82em;
+    height: .82em;
+    border-radius: 50%;
+    flex: 0 0 auto;
+    background: #e94444;
+    box-shadow: 0 0 0 3px rgba(255,255,255,.78), 0 0 0 7px rgba(233,68,68,.18);
+  }
+
+  .qy-hotspot.qy-scenic {
+    background: linear-gradient(180deg, #e8fff2, #87dd95 52%, #1f9858);
+  }
+
+  .qy-hotspot.qy-mother {
+    background: linear-gradient(180deg, #fff1f6, #ff9fbd 52%, #d85b88);
+    color: #fff;
+  }
+
+  .qy-hotspot:hover, .qy-hotspot:active {
+    transform: translate(-50%, -62%) scale(1.08);
+    filter: brightness(1.08);
+    box-shadow: 0 14px 26px rgba(30,89,62,.3);
+  }
+
+  .qy-map-hint {
+    position: fixed;
+    left: 50%;
+    bottom: max(18px, env(safe-area-inset-bottom));
+    transform: translateX(-50%);
+    z-index: 7;
+    border-radius: 999px;
+    padding: 10px 18px;
+    background: rgba(255,255,255,.86);
+    color: var(--qy-green-deep);
+    font-size: 15px;
+    font-weight: 900;
+    box-shadow: 0 10px 30px rgba(0,0,0,.14);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    pointer-events: none;
+  }
+
+  .qy-scroll-tip {
+    position: fixed;
+    right: max(16px, env(safe-area-inset-right));
+    bottom: max(18px, env(safe-area-inset-bottom));
+    z-index: 7;
+    border-radius: 999px;
+    padding: 10px 14px;
+    background: rgba(255,255,255,.86);
+    color: var(--qy-green-deep);
+    font-size: 14px;
+    font-weight: 900;
+    box-shadow: 0 10px 30px rgba(0,0,0,.14);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    pointer-events: none;
+  }
+
+  #qyPanorama {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+  }
+
+  .qy-vr-topbar {
+    position: fixed;
+    top: max(14px, env(safe-area-inset-top));
+    left: max(14px, env(safe-area-inset-left));
+    right: max(14px, env(safe-area-inset-right));
+    z-index: 1000001;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    pointer-events: none;
+  }
+
+  .qy-vr-title, .qy-vr-btn {
+    pointer-events: auto;
+    border: 1px solid rgba(255,255,255,.18);
+    border-radius: 999px;
+    background: rgba(0,0,0,.48);
+    color: #fff;
+    box-shadow: 0 10px 30px rgba(0,0,0,.28);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .qy-vr-title {
+    padding: 10px 18px;
+    font-size: 18px;
+    font-weight: 1000;
+    text-align: center;
+  }
+
+  .qy-vr-btn {
+    border: 0;
+    padding: 10px 16px;
+    font-size: 15px;
+    font-weight: 900;
+    cursor: pointer;
+  }
+
+  .qy-vr-controls {
+    position: fixed;
+    left: 50%;
+    bottom: max(18px, env(safe-area-inset-bottom));
+    transform: translateX(-50%);
+    z-index: 1000001;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 999px;
+    background: rgba(0,0,0,.42);
+    box-shadow: 0 12px 34px rgba(0,0,0,.28);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .qy-vr-controls button, .qy-upload-label {
+    border: 0;
+    border-radius: 999px;
+    padding: 9px 13px;
+    background: rgba(255,255,255,.16);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 900;
+    cursor: pointer;
+  }
+
+  #qyUpload { display: none; }
+
+  /* 竖屏：导览图可左右滑；按钮显示为图钉，点击区域仍匹配地标 */
+  @media (max-width: 900px) and (orientation: portrait) {
+    .qy-map-stage {
+      height: 100%;
+      width: calc(100vh * 2.0);
+      min-width: 1500px;
+      margin: 0;
+    }
+    .qy-hotspot {
+      width: 32px;
+      height: 32px;
+      padding: 0;
+      justify-content: center;
+    }
+    .qy-hotspot .qy-label { display: none; }
+    .qy-hotspot .qy-pin {
+      width: 11px;
+      height: 11px;
+      box-shadow: 0 0 0 4px rgba(255,255,255,.82), 0 0 0 9px rgba(233,68,68,.2);
+    }
+    .qy-title { font-size: 14px; padding: 8px 12px; }
+    .qy-btn { font-size: 13px; padding: 8px 12px; }
+    .qy-map-hint { bottom: 12px; font-size: 12px; padding: 8px 12px; max-width: 70vw; text-align: center; }
+    .qy-scroll-tip { display: none; }
+  }
+
+  @media (max-width: 720px) {
+    .qy-vr-title {
+      font-size: 13px;
+      padding: 8px 10px;
+      max-width: 52vw;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .qy-vr-btn { font-size: 12px; padding: 8px 10px; }
+    .qy-vr-controls {
+      bottom: 10px;
+      gap: 6px;
+      border-radius: 20px;
+      width: calc(100% - 20px);
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .qy-vr-controls button, .qy-upload-label { font-size: 12px; padding: 7px 9px; }
+  }
+
+  /* 修复：竖屏手机也能进入VR。不再旋转整个页面，避免 Pannellum 初始化失败 */
+  body.qy-vr-open {
+    overflow: hidden !important;
+  }
+
+
+  /* ==================== 泉城广场VR数字人口播悬浮层 · 轻遮挡/全身/游走版 ==================== */
+  .qy-narrator {
+    position: fixed;
+    inset: 0;
+    z-index: 1000002;
+    pointer-events: none;
+    display: none;
+  }
+  .qy-narrator.qy-show { display: block; }
+
+  /* 数字人：不再固定压在左下角，使用路径动画在全景画面内游走 */
+  .qy-narrator-character {
+    position: absolute;
+    left: 0;
+    bottom: max(86px, calc(env(safe-area-inset-bottom) + 74px));
+    width: clamp(118px, 13vw, 230px);
+    height: auto;
+    max-height: min(54vh, 480px);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    z-index: 4;
+    transform-origin: 50% 100%;
+    filter: drop-shadow(0 18px 30px rgba(0,0,0,.34));
+    animation: qyNarratorWalk 22s linear infinite;
+    will-change: transform, left, bottom;
+  }
+  .qy-speaking .qy-narrator-character { animation-duration: 15s; }
+  .qy-narrator-character img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: inherit;
+    object-fit: contain;
+    object-position: bottom center;
+    transform-origin: 50% 100%;
+    animation: qyNarratorBody 1.05s ease-in-out infinite;
+  }
+  .qy-speaking .qy-narrator-character img { animation-duration: .62s; }
+
+  @keyframes qyNarratorWalk {
+    0%   { transform: translate3d(5vw, 0, 0) scale(.96); }
+    16%  { transform: translate3d(22vw, -4vh, 0) scale(.90); }
+    34%  { transform: translate3d(44vw, -2vh, 0) scale(.98); }
+    50%  { transform: translate3d(66vw, -6vh, 0) scale(.88); }
+    67%  { transform: translate3d(78vw, 0, 0) scale(.94); }
+    84%  { transform: translate3d(34vw, -5vh, 0) scale(.86); }
+    100% { transform: translate3d(5vw, 0, 0) scale(.96); }
+  }
+  @keyframes qyNarratorBody {
+    0%, 100% { transform: translateY(0) rotate(-1deg); }
+    50% { transform: translateY(-7px) rotate(1.2deg); }
+  }
+
+  /* 口播框：改成低遮挡字幕条，不再大面积压住全景图 */
+  .qy-narrator-panel {
+    position: absolute;
+    left: 50%;
+    bottom: max(12px, env(safe-area-inset-bottom));
+    transform: translateX(-50%);
+    width: min(72vw, 760px);
+    min-height: 0;
+    padding: 10px 14px 12px;
+    border-radius: 18px;
+    color: #fff;
+    background: linear-gradient(135deg, rgba(6,78,59,.34), rgba(15,23,42,.30));
+    border: 1px solid rgba(255,255,255,.18);
+    box-shadow: 0 12px 34px rgba(0,0,0,.20);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    pointer-events: auto;
+    z-index: 5;
+  }
+  .qy-narrator-tag { display: none; }
+  .qy-narrator-title {
+    display: inline-block;
+    margin: 0 12px 0 0;
+    font-size: clamp(14px, 1.45vw, 22px);
+    line-height: 1.15;
+    font-weight: 1000;
+    letter-spacing: .02em;
+    vertical-align: middle;
+    text-shadow: 0 2px 8px rgba(0,0,0,.28);
+  }
+  .qy-narrator-subtitle {
+    display: inline;
+    min-height: 0;
+    font-size: clamp(13px, 1.2vw, 18px);
+    line-height: 1.42;
+    font-weight: 800;
+    color: rgba(255,255,255,.94);
+    text-shadow: 0 2px 8px rgba(0,0,0,.32);
+  }
+  .qy-narrator-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 0 12px;
+    vertical-align: middle;
+  }
+  .qy-narrator-start {
+    border: 0;
+    border-radius: 999px;
+    padding: 8px 13px;
+    color: #fff;
+    background: linear-gradient(135deg, #22c55e, #06b6d4);
+    font-size: clamp(12px, 1vw, 15px);
+    font-weight: 1000;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0,0,0,.24);
+    white-space: nowrap;
+  }
+  .qy-narrator-start:active { transform: scale(.97); }
+  .qy-narrator-wave {
+    display: inline-flex;
+    align-items: flex-end;
+    gap: 4px;
+    height: 26px;
+    padding: 6px 9px;
+    border-radius: 999px;
+    background: rgba(0,0,0,.20);
+  }
+  .qy-narrator-wave span {
+    width: 4px;
+    height: 10px;
+    border-radius: 999px;
+    background: #86efac;
+    opacity: .48;
+    animation: qyVoiceBars 1s infinite ease-in-out;
+  }
+  .qy-speaking .qy-narrator-wave span { opacity: 1; }
+  .qy-narrator-wave span:nth-child(2) { animation-delay: .1s; }
+  .qy-narrator-wave span:nth-child(3) { animation-delay: .2s; }
+  .qy-narrator-wave span:nth-child(4) { animation-delay: .3s; }
+  .qy-narrator-wave span:nth-child(5) { animation-delay: .4s; }
+  @keyframes qyVoiceBars {
+    0%, 100% { height: 9px; }
+    50% { height: 25px; }
+  }
+  .qy-narrator-progress {
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    bottom: 4px;
+    width: 0%;
+    max-width: calc(100% - 20px);
+    height: 3px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #22c55e, #06b6d4, #a7f3d0);
+    transition: width .2s linear;
+  }
+
+  @media (orientation: portrait) {
+    .qy-narrator-character {
+      width: clamp(105px, 30vw, 190px);
+      bottom: max(110px, calc(env(safe-area-inset-bottom) + 96px));
+      max-height: 42vh;
+      animation-name: qyNarratorWalkPortrait;
+    }
+    @keyframes qyNarratorWalkPortrait {
+      0%   { transform: translate3d(4vw, 0, 0) scale(.95); }
+      24%  { transform: translate3d(50vw, -7vh, 0) scale(.86); }
+      48%  { transform: translate3d(68vw, -1vh, 0) scale(.94); }
+      72%  { transform: translate3d(22vw, -5vh, 0) scale(.88); }
+      100% { transform: translate3d(4vw, 0, 0) scale(.95); }
+    }
+    .qy-narrator-panel {
+      width: calc(100% - 24px);
+      bottom: max(10px, env(safe-area-inset-bottom));
+      padding: 9px 12px 12px;
+      border-radius: 16px;
+    }
+    .qy-narrator-title { display: none; }
+    .qy-narrator-subtitle {
+      display: block;
+      padding-right: 116px;
+      font-size: 13px;
+      line-height: 1.38;
+    }
+    .qy-narrator-actions {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      margin: 0;
+      gap: 6px;
+    }
+    .qy-narrator-start { padding: 7px 10px; font-size: 12px; }
+    .qy-narrator-wave { display: none; }
+  }
+
+  @media (max-width: 900px) and (orientation: landscape) {
+    .qy-narrator-character {
+      width: clamp(92px, 11vw, 150px);
+      bottom: 54px;
+      max-height: 58vh;
+      animation-name: qyNarratorWalkPhoneLandscape;
+    }
+    @keyframes qyNarratorWalkPhoneLandscape {
+      0%   { transform: translate3d(5vw, 0, 0) scale(.93); }
+      20%  { transform: translate3d(20vw, -6vh, 0) scale(.82); }
+      42%  { transform: translate3d(42vw, -3vh, 0) scale(.90); }
+      62%  { transform: translate3d(72vw, -8vh, 0) scale(.78); }
+      82%  { transform: translate3d(38vw, -5vh, 0) scale(.82); }
+      100% { transform: translate3d(5vw, 0, 0) scale(.93); }
+    }
+    .qy-narrator-panel {
+      width: min(62vw, 560px);
+      right: 10px;
+      left: auto;
+      bottom: 8px;
+      transform: none;
+      padding: 8px 12px 11px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(6,78,59,.30), rgba(15,23,42,.26));
+    }
+    .qy-narrator-title { display: none; }
+    .qy-narrator-subtitle {
+      display: block;
+      padding-right: 146px;
+      font-size: 12px;
+      line-height: 1.35;
+      min-height: 32px;
+    }
+    .qy-narrator-actions {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      margin: 0;
+    }
+    .qy-narrator-start { padding: 7px 10px; font-size: 12px; }
+    .qy-narrator-wave { height: 22px; padding: 5px 8px; }
+    .qy-narrator-wave span { width: 3px; }
+  }
+
+
+  /* ==================== 国风数字人视频替换版：去掉旧图片数字人，使用新版动态数字人MP4 ==================== */
+  .qy-guofeng-video-character {
+    width: clamp(150px, 18vw, 300px);
+    height: clamp(260px, 42vh, 540px);
+    max-height: min(62vh, 540px);
+    overflow: visible;
+    filter: drop-shadow(0 18px 34px rgba(0,0,0,.38));
+  }
+  .qy-dh-video-crop {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 0;
+    background: transparent;
+    transform-origin: 50% 100%;
+    animation: qyNarratorBody 1.05s ease-in-out infinite;
+  }
+  .qy-dh-video {
+    height: 100%;
+    width: auto;
+    display: block;
+    object-fit: cover;
+    object-position: left center;
+    transform: translateX(0);
+    mix-blend-mode: multiply;
+    filter: contrast(1.12) saturate(1.08);
+    opacity: .98;
+  }
+  .qy-dh-video-fallback {
+    display:none;
+    height:100%;
+    width:auto;
+    object-fit:cover;
+    object-position:left center;
+    mix-blend-mode:multiply;
+  }
+  .qy-dh-video.qy-video-fail { display:none; }
+  .qy-dh-video.qy-video-fail + .qy-dh-video-fallback { display:block; }
+  .qy-speaking .qy-dh-video-crop {
+    animation-duration: .62s;
+  }
+  @media (orientation: portrait) {
+    .qy-guofeng-video-character {
+      width: clamp(140px, 38vw, 230px);
+      height: clamp(250px, 46vh, 470px);
+      max-height: 50vh;
+    }
+  }
+  @media (max-width: 900px) and (orientation: landscape) {
+    .qy-guofeng-video-character {
+      width: clamp(130px, 18vw, 210px);
+      height: clamp(220px, 55vh, 360px);
+      max-height: 58vh;
+      bottom: 58px;
+    }
+  }

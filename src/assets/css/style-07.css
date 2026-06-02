@@ -1,0 +1,5 @@
+.ai-svg-icon {
+    width: 32px;   /* 👈 在这里改宽度，32px 刚好能完美装进你 56px 的粉色圆形按钮里 */
+    height: 32px;  /* 👈 在这里改高度，保持和宽度一致 */
+    display: block;
+                }

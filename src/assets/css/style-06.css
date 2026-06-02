@@ -1,0 +1,63 @@
+/* === 使用原先山东地图：按钮精准放在城市代表小图下方 === */
+.sd-pre-map{
+  width:1402px !important;
+  min-width:1402px !important;
+}
+.sd-pre-map img{
+  width:1402px !important;
+  max-width:none !important;
+  height:auto !important;
+}
+.sd-pre-tip{
+  left:58px !important;
+  top:70px !important;
+  width:300px !important;
+  background:rgba(255,255,255,.88) !important;
+  color:#315b7a !important;
+  border:1px solid rgba(77,148,196,.18) !important;
+  box-shadow:0 12px 30px rgba(67,130,177,.16) !important;
+}
+.sd-city-btn{
+  z-index:6 !important;
+  transform:translateX(-50%) !important;
+  padding:8px 14px !important;
+  font-size:14px !important;
+  line-height:1 !important;
+  border:2px solid rgba(255,255,255,.92) !important;
+  border-radius:999px !important;
+  backdrop-filter:blur(8px) !important;
+  -webkit-backdrop-filter:blur(8px) !important;
+}
+.sd-city-btn.jinan{
+  left:486px !important;
+  top:448px !important;
+  color:#fff !important;
+  background:linear-gradient(135deg,#ff7f91,#ffb45f) !important;
+  box-shadow:0 10px 24px rgba(255,126,145,.38),0 0 0 7px rgba(255,255,255,.48) !important;
+}
+.sd-city-btn.locked{
+  background:rgba(255,255,255,.88) !important;
+  color:#27658d !important;
+  box-shadow:0 8px 20px rgba(53,122,166,.18) !important;
+}
+/* 位置：按钮对应地图上各代表图像正下方 */
+.sd-city-btn.liaocheng{left:226px !important;top:534px !important;}
+.sd-city-btn.dezhou{left:395px !important;top:326px !important;}
+.sd-city-btn.binzhou{left:647px !important;top:252px !important;}
+.sd-city-btn.dongying{left:829px !important;top:246px !important;}
+.sd-city-btn.yantai{left:1162px !important;top:271px !important;}
+.sd-city-btn.weihai{left:1280px !important;top:415px !important;}
+.sd-city-btn.qingdao{left:1052px !important;top:578px !important;}
+.sd-city-btn.weifang{left:876px !important;top:448px !important;}
+.sd-city-btn.zibo{left:706px !important;top:421px !important;}
+.sd-city-btn.taian{left:518px !important;top:625px !important;}
+.sd-city-btn.jining{left:489px !important;top:792px !important;}
+.sd-city-btn.heze{left:248px !important;top:678px !important;}
+.sd-city-btn.zaozhuang{left:604px !important;top:955px !important;}
+.sd-city-btn.linyi{left:782px !important;top:797px !important;}
+.sd-city-btn.rizhao{left:907px !important;top:730px !important;}
+
+@media(max-width:700px){
+  .sd-pre-map{width:1402px !important;min-width:1402px !important;}
+  .sd-pre-map img{width:1402px !important;}
+}

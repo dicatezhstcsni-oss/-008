@@ -1,0 +1,77 @@
+[
+  {
+    "type": "external",
+    "src": "https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js",
+    "attrs": "src=\"https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js\""
+  },
+  {
+    "type": "external",
+    "src": "https://cdn.jsdelivr.net/npm/chart.js",
+    "attrs": "src=\"https://cdn.jsdelivr.net/npm/chart.js\""
+  },
+  {
+    "type": "inline",
+    "path": "/src/legacy/js/legacy-03.js",
+    "attrs": ""
+  },
+  {
+    "type": "external",
+    "src": "https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js",
+    "attrs": "src=\"https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js\""
+  },
+  {
+    "type": "inline",
+    "path": "/src/legacy/js/legacy-05.js",
+    "attrs": ""
+  },
+  {
+    "type": "inline",
+    "path": "/src/legacy/js/legacy-06.js",
+    "attrs": ""
+  },
+  {
+    "type": "inline",
+    "path": "/src/legacy/js/legacy-07.js",
+    "attrs": ""
+  },
+  {
+    "type": "inline",
+    "path": "/src/legacy/js/legacy-08.js",
+    "attrs": ""
+  },
+  {
+    "type": "inline",
+    "path": "/src/legacy/js/legacy-09.js",
+    "attrs": ""
+  },
+  {
+    "type": "inline",
+    "path": "/src/legacy/js/legacy-10.js",
+    "attrs": ""
+  },
+  {
+    "type": "inline",
+    "path": "/src/legacy/js/legacy-11.js",
+    "attrs": ""
+  },
+  {
+    "type": "inline",
+    "path": "/src/legacy/js/legacy-12.js",
+    "attrs": ""
+  },
+  {
+    "type": "inline",
+    "path": "/src/legacy/js/legacy-13.js",
+    "attrs": "id=\"shandong-pre-guide-js\""
+  },
+  {
+    "type": "external",
+    "src": "https://lf-cdn.coze.cn/obj/unpkg/flow-platform/chat-app-sdk/1.2.0-beta.19/libs/cn/index.js",
+    "attrs": "src=\"https://lf-cdn.coze.cn/obj/unpkg/flow-platform/chat-app-sdk/1.2.0-beta.19/libs/cn/index.js\""
+  },
+  {
+    "type": "inline",
+    "path": "/src/legacy/js/legacy-15.js",
+    "attrs": ""
+  }
+]
